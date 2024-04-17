@@ -1,0 +1,11 @@
+version: '3.8'
+
+services:
+  websocket-server:
+    build: .
+    ports:
+      - "8765:8765"
+    environment:
+      SERVER_ADDRESS: localhost
+      SERVER_PORT: 8765
+      LOG_LEVEL: INFO
