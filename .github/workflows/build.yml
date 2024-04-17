@@ -1,34 +1,26 @@
-name: Docker Image CI
+name: Docker Build and Push
 
 on:
   push:
-    branches: [ "main" ]
-  pull_request:
-    branches: [ "main" ]
+    branches:
+      - main  # 触发条件可以根据你的需要进行调整
 
 jobs:
-
   build:
-
     runs-on: ubuntu-latest
 
     steps:
-    - uses: actions/checkout@v3
+    - name: Checkout code
+      uses: actions/checkout@v2
 
-    - name: Login to DockerHub
-      run: echo "${{ secrets.DOCKER_PASSWORD }}" | docker login -u "${{ secrets.DOCKER_USERNAME }}" --password-stdin
-    - name: Save current Unix timestamp
-      id: timestamp
-      run: echo "::set-output name=timestamp::$(date +%s)"
+    - name: Log in to Docker Hub
+      uses: docker/login-action@v1
+      with:
+        username: ${{ secrets.DOCKERHUB_USERNAME }}
+        password: ${{ secrets.DOCKERHUB_TOKEN }}
 
     - name: Build the Docker image
-      run: docker build . --file Dockerfile --tag gwozai/serv:${{ steps.timestamp.outputs.timestamp }}
+      run: docker build -t $GITHUB_ACTOR/yourimage:latest .
 
-    - name: Tag the Docker image as latest
-      run: docker tag gwozai/serv:latest
-
-    - name: Push to Docker Hub
-      run: docker push gwozai/serv:${{ steps.timestamp.outputs.timestamp }}
-
-    - name: Push 'latest' tag to Docker Hub
-      run: docker push gwozai/serv:latest
+    - name: Push Docker image to Docker Hub
+      run: docker push $GITHUB_ACTOR/yourimage:latest
