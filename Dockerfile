@@ -11,4 +11,4 @@ COPY . .
 RUN pip install --no-cache-dir -r requirements.txt
 
 # 启动 WebSocket 服务器
-CMD ["python", "server.py"]
+CMD ["python", "main.py"]
