@@ -20,7 +20,7 @@ jobs:
         password: ${{ secrets.DOCKERHUB_TOKEN }}
 
     - name: Build the Docker image
-      run: docker build -t $GITHUB_ACTOR/yourimage:latest .
+      run: docker build -t $GITHUB_ACTOR/websocketserver:latest .
 
     - name: Push Docker image to Docker Hub
-      run: docker push $GITHUB_ACTOR/yourimage:latest
+      run: docker push $GITHUB_ACTOR/websocketserver:latest
