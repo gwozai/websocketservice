@@ -22,13 +22,13 @@ jobs:
       run: echo "::set-output name=timestamp::$(date +%s)"
 
     - name: Build the Docker image
-      run: docker build . --file Dockerfile --tag ${{ secrets.DOCKER_USERNAME }}/serv:${{ steps.timestamp.outputs.timestamp }}
+      run: docker build . --file Dockerfile --tag gwozai/serv:${{ steps.timestamp.outputs.timestamp }}
 
     - name: Tag the Docker image as latest
-      run: docker tag ${{ secrets.DOCKER_USERNAME }}/serv:${{ steps.timestamp.outputs.timestamp }} ${{ secrets.DOCKER_USERNAME }}/pymessagerabbitmq:latest
+      run: docker tag gwozai/serv:${{ steps.timestamp.outputs.timestamp }} ${{ secrets.DOCKER_USERNAME }}/pymessagerabbitmq:latest
 
     - name: Push to Docker Hub
-      run: docker push ${{ secrets.DOCKER_USERNAME }}/serv:${{ steps.timestamp.outputs.timestamp }}
+      run: docker push gwozai/serv:${{ steps.timestamp.outputs.timestamp }}
 
     - name: Push 'latest' tag to Docker Hub
-      run: docker push ${{ secrets.DOCKER_USERNAME }}/serv:latest
+      run: docker push gwozai/serv:latest
